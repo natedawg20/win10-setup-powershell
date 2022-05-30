@@ -1,0 +1,22 @@
+Software Name,Installer,Used For,Homepage,Direct-Download Link
+Google Chrome,Google Chrome Setup.exe,Web Browser,https://www.google.com/chrome/,https://dl.google.com/chrome/install/375.126/chrome_installer.exe
+Mozilla Firefox,Mozilla FirefoxSetup.exe,Web Browser,https://www.mozilla.org/en-US/firefox/new/,https://download.mozilla.org/?product=firefox-stub&os=win&lang=en-US
+Brave,BraveSetup.exe,Web Browser,https://brave.com/download/,https://laptop-updates.brave.com/latest/winx64
+New Edge,New EdgeSetup.exe,Web Browser,https://www.microsoft.com/en-us/edge,https://go.microsoft.com/fwlink/?linkid=2109047&Channel=Stable&language=en&consent=1
+Opera,OperaSetup.exe,Web Browser,https://www.opera.com/download,https://www.opera.com/computer/thanks?ni=stable&os=windows
+GeForce Experience,GeForce ExperienceSetup.exe,GPU Driver Mgmt,https://www.nvidia.com/en-us/geforce/drivers/,https://us.download.nvidia.com/GFE/GFEClient/3.23.0.74/GeForce_Experience_v3.23.0.74.exe 
+AMD Radeon Software,AMD Radeon SoftwareSetup.exe,GPU Driver Mgmt,https://www.amd.com/en/technologies/radeon-software,https://drivers.amd.com/drivers/installer/21.20/beta/radeon-software-adrenalin-2020-21.8.2-minimalsetup-210824_web.exe
+HW Monitor,HW MonitorSetup.exe,Temp Monitor,https://www.cpuid.com/softwares/hwmonitor.html,https://download.cpuid.com/hwmonitor/hwmonitor_1.44.exe
+CPU-Z,CPU-ZSetup.exe,CPU Verification,https://www.cpuid.com/downloads/hwmonitor/hwmonitor_1.44.exe,https://www.cpuid.com/softwares/cpu-z.html
+VirtualBox,VirtualBoxSetup.exe,Utilities,https://www.virtualbox.org/wiki/Downloads,https://download.virtualbox.org/virtualbox/6.1.26/VirtualBox-6.1.26-145957-Win.exe
+LibreOffice,LibreOfficeSetup.exe,Productivity,https://www.libreoffice.org/download/download/,https://www.libreoffice.org/donate/dl/win-x86_64/7.1.6/en-US/LibreOffice_7.1.6_Win_x64.msi
+OnlyOffice,OnlyOfficeSetup.exe,Productivity,https://www.onlyoffice.com/download-desktop.aspx,https://download.documentfoundation.org/libreoffice/stable/7.1.6/win/x86_64/LibreOffice_7.1.6_Win_x64_helppack_en-US.msi
+OpenOffice,OpenOfficeSetup.exe,Productivity,https://www.openoffice.org/download/,https://downloads.sourceforge.net/project/openofficeorg.mirror/4.1.10/binaries/SDK/Apache_OpenOffice-SDK_4.1.10_Win_x86_install_en-US.exe?ts=gAAAAABhPl4pYE-lIkTPmE6tpgfImYpxMHGueKktVKuqq8kiKlQGsx22Dr9Q1FZg7QFVQxqfduHwRe8y_by1XyohtDj4wFNCuw%3D%3D&r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenofficeorg.mirror%2Ffiles%2F4.1.10%2Fbinaries%2FSDK%2FApache_OpenOffice-SDK_4.1.10_Win_x86_install_en-US.exe%2Fdownload
+Steam,SteamSetup.exe,Gaming,https://store.steampowered.com/about/,https://cdn.akamai.steamstatic.com/client/installer/SteamSetup.exe
+Discord,DiscordSetup.exe,Gaming,https://discord.com/download,https://discord.com/api/downloads/distributions/app/installers/latest?channel=stable&platform=win&arch=x86
+Origin,OriginSetup.exe,Gaming,https://www.origin.com/usa/en-us/store/download,https://www.dm.origin.com/download
+EpicGames,EpicGamesSetup.exe,Gaming,https://www.epicgames.com/fortnite/en-US/download,https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi
+Battle.Net,Battle.NetSetup.exe,Gaming,https://www.blizzard.com/en-us/download/,https://www.battle.net/download/getInstallerForGame?os=win&gameProgram=BATTLENET_APP&version=Live&id=undefined
+Notepad++,Notepad++Setup.exe,Utilities,https://notepad-plus-plus.org/downloads/,https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.1.4/npp.8.1.4.Installer.exe
+MSI Afterburner,MSI AfterburnerSetup.exe,Utilities-GPU,https://www.msi.com/Landing/afterburner/graphics-cards,https://download.msi.com/uti_exe/vga/MSIAfterburnerSetup.zip?__token__=exp=1641309040~acl=/*~hmac=824154b5652b7c5aa7d5b46edcb36f22079b7899a532fef8d52f93a9db358783
+VLC,VLCSetup.exe,Productivity,,https://mirrors.ocf.berkeley.edu/videolan-ftp/vlc/3.0.16/win64/vlc-3.0.16-win64.exe
