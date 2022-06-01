@@ -243,99 +243,100 @@ WELCOME to the Windows Setup Script!
 Copyright - September, 2021"
 Write-Host -ForegroundColor Green -BackgroundColor DarkBlue "
 Use this script for setting up Windows 10 on a new device!"
+<#
+Automated and Unattended Setup Script
 
-$CurrentDateTime
-
-                             
-ElevTest
-
-Write-Host "------------------------------------------"
-
-TZChange
-
-ModifyDarkMode
-
-Browsers_Download
-
-Browsers_Install
-
-InstallOffice
-
-RenameComputer
-
-WindowsUpdate
- AUTOMATED INSTALLATION
- Get Logged on user: (Get-WmiObject -Class Win32_ComputerSystem).Username - Shows COMPUTER\Logged on User
+Powershell script to install applications and perform general Windows 10 Setup Tasks
 #>
-# Powershell script to install applications and perform general Windows 10 Setup Tasks
-# Add a feature to gather the following information:
-# CsName
-# CsNumberOfProcessors
-# CsNumbersOfLogicalProcessors
-# CsProcessors
-# CsUserName
-# TimeZone
-# OsTotalVisibleMemorySize
-# WindowsInstallDateFromRegistry
-# WindowsProductName
+Write-Host -ForegroundColor Green "Windows Setup Script"
+if
+(
+    (
+        Test-path .\sysinfo
+    ) -eq $false
+)
+
+{
+    New-Item -ItemType File sysinfo | Out-Null
+}
 Clear-Host
+Get-ComputerInfo | ForEach-Object{
+    Write-output "Computer name: $($_.CSName)" | Tee-Object .\sysinfo,
+    "Local system time: $($_.OSLocalDateTime)" | Tee-Object -Append .\sysinfo,
+    "Installed on: $($_.OsInstallDate)" | Tee-Object -Append .\sysinfo,
+    "Windows Product/Version: $($_.WindowsProductName)" | Tee-Object -Append .\sysinfo,
+    "Installed CPU: $($_.CsProcessors)"| Tee-Object -Append .\sysinfo,
+    "Username: $($_.CsUserName)"| Tee-Object -Append .\sysinfo,
+    "System/CPU Type: $($_.OsArchitecture)"| Tee-Object -Append .\sysinfo,
+    "Up-time: $($_.OsUpTime)"| Tee-Object -Append .\sysinfo,
+    "OS/System drive: $($_.OsSystemDrive)"| Tee-Object -Append .\sysinfo,
+    "Windows root directory: $($_.OsWindowsDirectory)"| Tee-Object -Append .\sysinfo,
+    "System root directory: $($_.OsSystemDirectory)"
+    }
 $host.UI.RawUI.WindowTitle="Windows Setup"
 #$Date = Get-Date -Format "yyyy-MM-dd HHmm"
 $LogFile = ".\Windows.Setup.log"
-$LogTime = Get-Date -Format "MM-dd-yyyy HH:mm:ss CST"
+$LogTime = Get-Date -Format "MM-dd-yyyy HH:mm:ss"
 $ScriptStart = Get-Date -Format "HH:mm:ss tt"
 while($true)
 {
     if
-        (
-            (Test-path "$LogFile") -like $true
-        )
-        {
-            Write-Output "Windows Setup Script`n==================== $LogTime ====================" | Tee-Object  -Append $LogFile
-            break
-        }
+    (
+        (Test-path "$LogFile") -like $true
+    )
+    {
+        Write-Output "Windows Setup Script`n==================== $LogTime ====================" | Tee-Object  -Append $LogFile
+        break
+    }
     elseif 
-        (
-            (
-            Test-path "$LogFile"
-            ) -like $false
-        )
-        {
+    (
+        (Test-path "$LogFile") -like $false
+    )
+    {
         New-Item -Name $LogFile | Out-Null
         continue
-        }
+    }
 }
 
-
-$NewComputerName = Read-Host -Prompt "Please enter your new computer name"
-"Computer name: $Env:COMPUTERNAME" | Tee-Object -Append $LogFile
-
+$NewComputerName = Read-Host -Prompt "Please enter your new computer name (leave blank and press ENTER to keep default system name of $((Get-ComputerInfo).CSName))"
 if
-    (
-        (
-            [Security.Principal.WindowsIdentity]::GetCurrent().Groups -contains 'S-1-5-32-544'
-        ) -like "True"
-    )
-        {
-        Write-Output "Running as ADMIN" | Tee-Object -Append $LogFile
-        }
+(
+    ([Security.Principal.WindowsIdentity]::GetCurrent().Groups -contains 'S-1-5-32-544') -like "True"
+)
+{
+    Write-Output "Running as ADMIN" | Tee-Object -Append $LogFile
+    Rename-Computer -NewName "Renaming computer to: $NewComputerName" | Tee-Object -Append $LogFile
+}
 else
-    {
-        Write-Output "Running with STANDARD user privliges`n" | Tee-Object -Append $LogFile
-    }
+{
+    Write-Output "Running with STANDARD user privliges`n" | Tee-Object -Append $LogFile
+}
 Set-Timezone -Name "Central Standard Time"
 Write-Output "Set Timezone to Central Standard Time" | Tee-Object -Append $LogFile
 Write-Output "Enabling Dark Mode for Apps and System" | Tee-Object -Append $LogFile
 
-# Registry Changes
+<#
+REGISTRY Changes
+
+Performs the following changes via the Windows registry (in this specific order)
+1. Enables 'system' dark mode
+2. Enables 'app' dark mode
+3. Removes 'Cortana' button from Taskbar
+#>
 
 Write-Output "Enabling dark mode for 'System'....Status: $(reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize\ /v SystemUsesLightTheme  /t REG_DWORD /D 0 /f)" | Tee-Object -Append $LogFile 
 Write-Output "Enabling dark mode for 'Apps'....Status: $(reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize\ /v AppsUseLightTheme     /t REG_DWORD /D 0 /f)" | Tee-Object -Append $LogFile
 Write-Output "Removing 'Cortana' button from Taskbar....Status: $(reg add HKCU\SOFTWARE\MICROSOFT\WINDOWS\CURRENTVERSION\EXPLORER\ADVANCED /v   ShowCortanaButton     /t REG_DWORD /D 0 /f)" | Tee-Object -Append $LogFile
-Read-Host -Prompt "The following applications will be installed: $((Import-CSV .\Apps.csv).'Software Name') -- Press ENTER to continue"
-Write-Output "Downloading app installers" | Tee-Object -Append $LogFile
-Import-Csv .\apps.csv | ForEach-Object {
-    Write-Output "Downloading $($_.'Software Name') $($_.Homepage)" | Tee-Object -Append $LogFile
+
+# Restarts explorer.exe to verify necessary registry changes take effect
+(Get-Process explorer).Kill()
+Start-Process explorer.exe
+
+# Downloads then installs all applications in .\apps.csv
+Read-Host "The following applications will be installed: $((Import-CSV .\Apps.csv).'Software Name')`nPress ENTER to continue"
+Import-Csv .\apps.csv | ForEach-Object 
+{
+    Write-Output "Downloading $($_.'Software Name') // $($_.Homepage)" | Tee-Object -Append $LogFile
     Invoke-WebRequest -Uri $_.'Direct-Download Link' -OutFile $_.'Installer' | Tee-Object -Append $LogFile
 }
 Write-Output "Installing Downloaded Browsers!" | Tee-Object $LogFile
